@@ -31,7 +31,12 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  # code here
+  cart.each do |item|
+    item.each do |name, attributes|
+      binding.pry
+    end
+  end
+  cart
 end
 
 def checkout(cart, coupons)
@@ -40,10 +45,11 @@ end
 
 
 cart = {
-  "AVOCADO" => {:price => 3.0, :clearance => true, :count => 3},
-  "KALE"    => {:price => 3.0, :clearance => false, :count => 1}
+  "PEANUTBUTTER" => {:price => 3.00, :clearance => true,  :count => 2},
+  "KALE"         => {:price => 3.00, :clearance => false, :count => 3}
+  "SOY MILK"     => {:price => 4.50, :clearance => true,  :count => 1}
 }
 
 coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
 
-puts apply_coupons(cart, coupons)
+puts apply_clearance(cart)
