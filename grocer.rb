@@ -15,13 +15,15 @@ def apply_coupons(cart, coupons)
   coupons_applied = {}
   
   cart.each do |name, attributes|
-    coupons.each do |key, value|
+    coupons.each do |coupon|
+    coupon.each do |key, value|
     #binding.pry
       if name == value
         attributes[:count] -= coupons[:num]
         coupons_applied["#{name} W/COUPON"] = {price: coupons[:cost], clearance: attributes[:clearance], count: 1}
       #  binding.pry
       end
+    end
     end
   end
   if coupons_applied.size >= 1
