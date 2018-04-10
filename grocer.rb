@@ -18,7 +18,7 @@ def apply_coupons(cart, coupons)
     coupons.each do |key, value|
     #binding.pry
       if name == value
-        #attributes[:count] -= 
+        attributes[:count] -= 
         binding.pry
       end
     end
