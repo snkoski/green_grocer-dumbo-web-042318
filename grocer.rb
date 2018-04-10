@@ -6,14 +6,28 @@ def consolidate_cart(cart)
   cart.each do |items|
     items.each do |name, attributes|
       consolidated[name] = {price: attributes[:price], clearance: attributes[:clearance], count: cart.count(items)}
-      #binding.pry
     end
   end
   consolidated
 end
 
 def apply_coupons(cart, coupons)
-  # code here
+  coupons_applied = {}
+  
+  cart.each do |name, attributes|
+    coupons.each do |coupon|
+    coupon.each do |key, value|
+      if name == value
+        attributes[:count] -= coupon[:num]
+        coupons_applied["#{name} W/COUPON"] = {price: coupon[:cost], clearance: attributes[:clearance], count: coupons.count(coupon)}
+      end
+    end
+    end
+  end
+  if coupons_applied.size >= 1
+    cart.merge!(coupons_applied)
+  end
+  cart
 end
 
 def apply_clearance(cart)
@@ -25,10 +39,11 @@ def checkout(cart, coupons)
 end
 
 
-cart = [
-  {"AVOCADO" => {:price => 3.0, :clearance => true }},
-  {"AVOCADO" => {:price => 3.0, :clearance => true }},
-  {"KALE"    => {:price => 3.0, :clearance => false}}
-]
+cart = {
+  "AVOCADO" => {:price => 3.0, :clearance => true, :count => 3},
+  "KALE"    => {:price => 3.0, :clearance => false, :count => 1}
+}
 
-puts consolidate_cart(cart)
+coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
+
+puts apply_coupons(cart, coupons)
