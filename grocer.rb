@@ -15,7 +15,7 @@ def apply_coupons(cart, coupons)
   coupons_applied = {}
   
   cart.each do |name, attributes|
-    
+    binding.pry
   end
 end
 
