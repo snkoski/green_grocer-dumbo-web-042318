@@ -30,4 +30,6 @@ cart = [
   {"KALE"    => {:price => 3.0, :clearance => false}}
 ]
 
+coupons = {:item => "AVOCADO", :num => 2, :cost => 5.0}
+
 puts consolidate_cart(cart)
