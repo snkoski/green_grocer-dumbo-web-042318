@@ -41,17 +41,33 @@ def apply_clearance(cart)
 end
 
 def checkout(cart, coupons)
-  # code here
+  consolidate_cart(cart)
+  
+  cart
 end
 
 
-cart = {
-  "PEANUTBUTTER" => {:price => 3.00, :clearance => true,  :count => 2},
-  "KALE"         => {:price => 3.00, :clearance => false, :count => 3},
-  "SOY MILK"     => {:price => 4.50, :clearance => true,  :count => 1}
-}
+cart = [
+  {"AVOCADO" => {:price => 3.0, :clearance => true }},
+  {"AVOCADO" => {:price => 3.0, :clearance => true }},
+  {"AVOCADO" => {:price => 3.0, :clearance => true }},
+  {"KALE"    => {:price => 3.0, :clearance => false}},
+  {"BEETS"  => {:price => 2.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+  {"CHEESE" => {:price => 6.50, :clearance => false}},
+]
 
-coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
+coupons = [
+      {:item => "AVOCADO", :num => 2, :cost => 5.00},
+      {:item => "BEER", :num => 2, :cost => 20.00},
+      {:item => "CHEESE", :num => 3, :cost => 15.00}
+    ]
+
+
 def minus_20_percent(price)
   twenty_percent = price * 0.20
   #binding.pry
@@ -59,4 +75,4 @@ def minus_20_percent(price)
 end
 
 
-puts apply_clearance(cart)
+puts checkout(cart, coupons)
