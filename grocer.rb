@@ -24,6 +24,10 @@ def apply_coupons(cart, coupons)
       end
     end
   end
+  if coupons_applied.size >= 1
+    cart.merge(coupons_applied)
+  end
+  cart
 end
 
 def apply_clearance(cart)
