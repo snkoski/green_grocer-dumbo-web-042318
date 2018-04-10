@@ -20,7 +20,7 @@ def apply_coupons(cart, coupons)
       if name == value
         attributes[:count] -= coupons[:num]
         coupons_applied["#{name} W/COUPON"] = {price: coupons[:cost], clearance: attributes[:clearance], count: 1}
-        binding.pry
+      #  binding.pry
       end
     end
   end
