@@ -24,12 +24,11 @@ def checkout(cart, coupons)
 end
 
 
-cart = [
-  {"AVOCADO" => {:price => 3.0, :clearance => true }},
-  {"AVOCADO" => {:price => 3.0, :clearance => true }},
-  {"KALE"    => {:price => 3.0, :clearance => false}}
-]
+cart = {
+  "AVOCADO" => {:price => 3.0, :clearance => true, :count => 3},
+  "KALE"    => {:price => 3.0, :clearance => false, :count => 1}
+}
 
 coupons = {:item => "AVOCADO", :num => 2, :cost => 5.0}
 
-puts consolidate_cart(cart)
+puts apply_coupons(cart, coupons)
