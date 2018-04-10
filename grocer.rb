@@ -31,11 +31,12 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  cart.each do |item|
-    item.each do |name, attributes|
-      binding.pry
+  cart.each do |name, attributes|
+      if attributes[:clearance] == true
+        new_price = minus_20_percent(attributes[:price])
+        attributes[:price] = new_price
+      end
     end
-  end
   cart
 end
 
@@ -46,10 +47,16 @@ end
 
 cart = {
   "PEANUTBUTTER" => {:price => 3.00, :clearance => true,  :count => 2},
-  "KALE"         => {:price => 3.00, :clearance => false, :count => 3}
+  "KALE"         => {:price => 3.00, :clearance => false, :count => 3},
   "SOY MILK"     => {:price => 4.50, :clearance => true,  :count => 1}
 }
 
 coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
+def minus_20_percent(price)
+  twenty_percent = price * 0.20
+  #binding.pry
+  return (price - twenty_percent)
+end
+
 
 puts apply_clearance(cart)
