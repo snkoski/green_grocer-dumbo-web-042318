@@ -12,20 +12,24 @@ def consolidate_cart(cart)
 end
 
 def apply_coupons(cart, coupons)
-  coupons_applied = {}
-  
-  cart.each do |name, attributes|
-    coupons.each do |coupon|
+  applied_coupons = {}
+  coupons.each do |coupon|
     coupon.each do |key, value|
-      if name == value
-        attributes[:count] -= coupon[:num]
-        coupons_applied["#{name} W/COUPON"] = {price: coupon[:cost], clearance: attributes[:clearance], count: coupons.count(coupon)}
+      if cart.has_key?(coupon[:item])
+        if cart[coupon[:item]][:count] >= coupon[:num]
+          
+          counted = cart[coupon[:item]][:count] / coupon[:num]
+          
+          cart[coupon[:item]][:count] =  cart[coupon[:item]][:count] % coupon[:num]
+          applied_coupons["#{coupon[:item]} W/COUPON"] = {price: coupon[:cost], clearance: cart[coupon[:item]][:clearance], count: counted}
+          #binding.pry
+        end
       end
     end
-    end
   end
-  if coupons_applied.size >= 1
-    cart.merge!(coupons_applied)
+  
+  if applied_coupons.size >= 1
+    cart.merge!(applied_coupons)
   end
   cart
 end
@@ -41,9 +45,18 @@ def apply_clearance(cart)
 end
 
 def checkout(cart, coupons)
-  consolidate_cart(cart)
-  
-  cart
+  total = 0
+  cart = consolidate_cart(cart)
+  cart = apply_coupons(cart, coupons)
+  cart = apply_clearance(cart)
+  cart.each do |name, attributes|
+    total += (attributes[:price] * attributes[:count])
+  end
+ # binding.
+ if total > 100
+   total = (total - (total * 0.10))
+ end
+  total
 end
 
 
@@ -74,5 +87,3 @@ def minus_20_percent(price)
   return (price - twenty_percent)
 end
 
-
-puts checkout(cart, coupons)
